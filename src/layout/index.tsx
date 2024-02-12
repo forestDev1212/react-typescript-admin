@@ -1,11 +1,13 @@
 import { Menu, MenuProps } from "antd";
-import { NonIndexRouteObject } from "react-router-dom";
+import { NonIndexRouteObject, Outlet, useLoaderData } from "react-router-dom";
 import Sider from "antd/es/layout/Sider";
+import { Spin } from "antd";
 import Layout, { Content, Footer, Header } from "antd/es/layout/layout";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { routes } from "../config/router";
 import "antd/dist/reset.css";
+import NoAuthPage from "../components/NoAuthPage";
 
 type RouteType = NonIndexRouteObject & {
   title: string;
@@ -15,6 +17,7 @@ const BasicLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { isAdmin } = useLoaderData() as any;
 
   const getItems: any = (children: RouteType[]) => {
     return children.map((item) => {
@@ -76,7 +79,21 @@ const BasicLayout: React.FC = () => {
       </Sider>
       <Layout className="site-layout">
         <Header></Header>
-        <Content></Content>
+        <Content
+          style={{
+            padding: 16,
+            overflow: "auto",
+            height: `calc(100vh - 128px)`,
+          }}
+        >
+          {isAdmin ? (
+            <Suspense fallback={<Spin size="large" />}>
+              <Outlet />
+            </Suspense>
+          ) : (
+            <NoAuthPage />
+          )}
+        </Content>
         <Footer></Footer>
       </Layout>
     </Layout>

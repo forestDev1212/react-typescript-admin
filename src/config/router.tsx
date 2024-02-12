@@ -6,6 +6,7 @@ import {
   TableOutlined,
 } from "@ant-design/icons";
 import { createBrowserRouter, Navigate } from "react-router-dom";
+import { authLoader } from "../App";
 import Dashboard from "../pages/Dashboard/index";
 import FormPage from "../pages/FormPage/index";
 import TablePage from "../pages/TablePage/index";
@@ -14,6 +15,7 @@ const routes = [
   {
     path: "/",
     element: <App />,
+    loader: authLoader,
     children: [
       {
         children: [
