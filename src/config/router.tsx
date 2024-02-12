@@ -6,6 +6,15 @@ const routes = [
   {
     path: "/",
     element: <App />,
+    children: [
+      {
+        children: [
+          {
+            path: "/",
+          },
+        ],
+      },
+    ],
   },
 ];
 
