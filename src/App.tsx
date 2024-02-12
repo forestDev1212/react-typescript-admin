@@ -1,9 +1,13 @@
-import React from "react";
+import React, { Suspense } from "react";
+import { ConfigProvider, Spin } from "antd";
+import BasicLayout from "./layout/index";
 const App: React.FC = () => {
   return (
-    <>
-      <p>This is App.tsx This is my First TypeScript.</p>
-    </>
+    <ConfigProvider>
+      <Suspense fallback={<Spin size="large" className="globa_spin" />}>
+        <BasicLayout />
+      </Suspense>
+    </ConfigProvider>
   );
 };
 
